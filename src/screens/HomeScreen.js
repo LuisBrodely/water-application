@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import Constants from 'expo-constants'
 import Information from '../components/Information/Information'
@@ -8,7 +8,7 @@ import { SelectList } from 'react-native-dropdown-select-list'
 import { useState } from 'react'
 
 const categories = [
-    { key: '1', value: '2023'},
+    { key: '1', value: '2023' },
     { key: '2', value: '2022' },
     { key: '3', value: '2019' },
     { key: '4', value: '2018' },
@@ -32,40 +32,47 @@ export default function HomeScreen({ navigation }) {
     const [selected2, setSelected2] = useState('')
 
     return (
-        <View style={styles.container}>
-            <Text style={{ ...styles.margins, fontSize: 32, fontWeight: '800' }}>Do you already know where to travel?</Text>
-            <View style={{...styles.margins, marginVertical: 10}}>
-                <SelectList
-                    setSelected={(val) => setSelected(val)}
-                    data={categories}
-                    save="value"
-                    search={false}
-                    defaultOption={categories[0]} 
-                />
-            </View>
-            <View style={{...styles.margins, marginVertical: 10}}>
-                <SelectList
-                    setSelected={(val) => setSelected(val)}
-                    data={years}
-                    save="value"
-                    search={false}
-                    defaultOption={years[0]} 
-                />        
-            </View>
+        <ScrollView
+        contentContainerStyle={{
+            paddingBottom: 20,
+        }}
+        showsVerticalScrollIndicator={false}
+        >
+            <View style={styles.container}>
+                <Text style={{ ...styles.margins, fontSize: 32, fontWeight: '800' }}>Do you already know where to travel?</Text>
+                <View style={{ ...styles.margins, marginVertical: 10 }}>
+                    <SelectList
+                        setSelected={(val) => setSelected(val)}
+                        data={categories}
+                        save="value"
+                        search={false}
+                        defaultOption={categories[0]}
+                    />
+                </View>
+                <View style={{ ...styles.margins, marginVertical: 10 }}>
+                    <SelectList
+                        setSelected={(val) => setSelected2(val)}
+                        data={years}
+                        save="value"
+                        search={false}
+                        defaultOption={years[0]}
+                    />
+                </View>
 
-            <View style={styles.margins}>
-                <Text style={{ ...styles.texts, marginTop: 20 }}>Calidad del agua</Text>
-            </View>
+                <View style={styles.margins}>
+                    <Text style={{ ...styles.texts, marginTop: 20 }}>Calidad del agua</Text>
+                </View>
 
-            <View style={{ marginVertical: 105 }}>
-                <Wave color={'#0459C6'} />
-            </View>
+                <View style={{ marginVertical: 105 }}>
+                    <Wave color={'#0459C6'} />
+                </View>
 
-            <View style={styles.margins}>
-                <Text style={styles.texts}>Formas de cuidar el agua</Text>
+                <View style={styles.margins}>
+                    <Text style={styles.texts}>Formas de cuidar el agua</Text>
+                </View>
+                <Information />
             </View>
-            <Information />
-        </View>
+        </ScrollView>
     )
 }
 

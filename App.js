@@ -21,7 +21,7 @@ function App() {
             } else if (route.name === 'Information') {
               iconName = 'waves';
             } else if (route.name === 'Water') {
-              iconName = focused ? 'messenger' : 'messenger-outline';
+              iconName = 'collections';
             }
             return <Icon name={iconName} size={size} color={color} />;
           },

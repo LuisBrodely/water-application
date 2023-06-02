@@ -17,7 +17,7 @@ const TodoItem = ({ title, description }) => {
           size={24}
           color={completed ? 'gray' : 'black'}
         />
-        <View style={{ marginLeft: 10 }}>
+        <View style={{ marginLeft: 14, marginRight:28 }}>
           <Text style={[styles.title, completed && styles.completedText]}>{title}</Text>
           <Text style={styles.description}>{description}</Text>
         </View>
@@ -30,13 +30,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
+    paddingVertical: 20,
     paddingHorizontal: 20,
-    backgroundColor: 'white',
   },
   completedContainer: {
     textDecorationLine: 'line-through',
-    backgroundColor: '#F4F4F4',
+    backgroundColor: '#F1F6FE',
   },
   title: {
     fontSize: 16,
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   completedText: {
-    color: 'gray',
+    color: 'black',
   },
   description: {
     fontSize: 14,

@@ -19,7 +19,10 @@ export default function HomeNavigator() {
             />
             <Stack.Screen 
                 name="InformationStack" 
-                component={InformationStack} 
+                component={InformationStack}
+                options={{
+                    headerShown: false,
+                }} 
             />
         </Stack.Navigator>
     )
