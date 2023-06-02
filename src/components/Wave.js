@@ -5,7 +5,7 @@ import { Easing } from 'react-native-reanimated'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const _size = 50
-const _color = '#2380FB'
+const _color = '#0459C6'
 
 export default function Wave({color}) {
     return (
@@ -15,13 +15,13 @@ export default function Wave({color}) {
                     return (
                         <MotiView
                             from={{ opacity: 1, scale: 1 }}
-                            animate={{ opacity: 0, scale: 6 }}
+                            animate={{ opacity: 0.2, scale: 4 }}
                             transition={{
                                 type: 'timing',
                                 duration: 3000,
                                 easing: Easing.out(Easing.ease),
                                 delay: index * 400,
-                                repeatReverse: false,
+                                repeatReverse: true,
                                 loop: true,
                             }}
                             key={index}

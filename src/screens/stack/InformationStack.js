@@ -14,8 +14,8 @@ export default function InformationStack() {
 
     return (
         <ScrollView>
-             { description.map( ( texts ) => (
-                <View style={ styles.cardBox }>
+             { description.map( ( texts, index ) => (
+                <View style={ styles.cardBox } key={index}>
                     <View style={ styles.content }>
                         <Text style={ styles.title }> { texts.title } </Text>
                         <Text style={ styles.description }> { texts.description }</Text>
