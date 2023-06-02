@@ -2,12 +2,11 @@ import * as React from 'react';
 import { Text, StatusBar, View, StyleSheet } from 'react-native';
 import Constants from 'expo-constants';
 import Donut from '../components/Graphs/Donut';
-import Bar from '../components/Graphs/Bar';
 
 const data = [{
   percentage: 8,
   color: 'tomato',
-  max: 100,
+  max: 100, 
   radius: 100
 }, {
   percentage: 14,
@@ -26,13 +25,12 @@ const data = [{
 export default function GraphsScreen() {
   return (
     <View style={styles.container}>
-      <StatusBar hidden />
-      <View style={{ flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', alignItems: 'center' }}>
+      <StatusBar hidden/>
+      <View style={{flexDirection: 'row', justifyContent: 'space-evenly', flexWrap: 'wrap', alignItems: 'center'}}>
         {data.map((p, i) => {
-          return <Donut key={i} percentage={p.percentage} color={p.color} delay={500 + 100 * i} max={p.max} radius={p.radius} />
+          return <Donut key={i} percentage={p.percentage} color={p.color} delay={500 + 100 * i} max={p.max} radius={p.radius}/>
         })}
       </View>
-      <Bar color="blue" percentage={75} maxValue={100} />
     </View>
   );
 }
