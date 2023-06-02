@@ -1,11 +1,16 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
-import React from 'react'
+import React, {useEffect} from 'react'
 import Constants from 'expo-constants'
 import Information from '../components/Information/Information'
 import Wave from '../components/Wave'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { SelectList } from 'react-native-dropdown-select-list'
 import { useState } from 'react'
+import axios from "axios";
+
+
+
+
 
 const categories = [
     { key: '1', value: '2023'},
@@ -30,22 +35,54 @@ const years = [
 export default function HomeScreen({ navigation }) {
     const [selected, setSelected] = useState('')
     const [selected2, setSelected2] = useState('')
+    const [chartImage4, setChartImage4] = useState([]);
+    const [chartImage5, setChartImage5] = useState([]);
+
+    const handleAnos = (value) => {
+        axios.post('http://127.0.0.1:5000/anos', {"ano": "2020", "tipo": value})
+            .then(response => {
+                // Manejar la respuesta del servidor
+                setChartImage5(response.data.columns);
+            })
+            .catch(error => {
+                // Ocurrió un error al enviar la ruta del archivo
+                console.error(error);
+            });
+    };
+
+    const obtenerColumnasCategoria = () => {
+
+        axios.post('http://localhost:5000/categorias', {'tipo': 10})
+            .then(response => {
+                // Manejar la respuesta del servidor
+                setChartImage4(response.data.columns);
+            })
+            .catch(error => {
+                // Ocurrió un error al enviar la ruta del archivo
+                console.error(error);
+            });
+    };
+
+    useEffect(() => {
+        obtenerColumnasCategoria();
+    }, []);
 
     return (
         <View style={styles.container}>
             <Text style={{ ...styles.margins, fontSize: 32, fontWeight: '800' }}>Do you already know where to travel?</Text>
             <View style={{...styles.margins, marginVertical: 10}}>
                 <SelectList
-                    setSelected={(val) => setSelected(val)}
+                    setSelected={(value) => handleAnos(value)}
                     data={categories}
                     save="value"
                     search={false}
-                    defaultOption={categories[0]} 
+                    onChange
+                    defaultOption={categories[0]}
                 />
             </View>
             <View style={{...styles.margins, marginVertical: 10}}>
                 <SelectList
-                    setSelected={(val) => setSelected(val)}
+                    setSelected={(value) => handleAnos(value)}
                     data={years}
                     save="value"
                     search={false}
