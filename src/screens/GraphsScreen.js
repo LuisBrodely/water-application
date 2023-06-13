@@ -4,59 +4,36 @@ import Constants from "expo-constants";
 import Donut from "../components/Graphs/Donut";
 import { StatusBar } from "expo-status-bar";
 import { ScrollView } from "@motify/components";
+import { useState, useEffect, useContext } from 'react'
+import { AppContext } from "../context/Context";
+import { SelectList } from "react-native-dropdown-select-list";
+import Header from "../components/Header";
 
-const data = [
-  {
-    percentage: 8,
-    color: "#3ECEAB",
-    max: 100,
-    radius: 80,
-  },
-  {
-    percentage: 14,
-    color: "#0459C6",
-    max: 100,
-    radius: 80,
-  },
-  {
-    percentage: 20,
-    color: "#056BF0",
-    max: 100,
-  },
-  {
-    percentage: 80,
-    color: "#58E4C2",
-    max: 100,
-  },
-  {
-    percentage: 20,
-    color: "#2380FB",
-    max: 100,
-  },
-  {
-    percentage: 20,
-    color: "#8DEBD4",
-    max: 100,
-  },
-  {
-    percentage: 20,
-    color: "#D974DB",
-    max: 100,
-  },
-  {
-    percentage: 20,
-    color: "#6B71C8",
-    max: 100,
-  },
-];
+import { Rios, Arroyo, Lagos, Manantial, Laguna, Pozo } from "../util/util";
 
 export default function GraphsScreen() {
+
+  const water = [
+    { key: "1", value: "Rios" },
+    { key: "2", value: "Lagos" },
+    { key: "3", value: "Arroyo" },
+    { key: "4", value: "Laguna" },
+    { key: "5", value: "Manantial" },
+    { key: "6", value: "Pozo" },
+  ];
+
+  const { selected, setSelected, selected2, setSelected2 } = useContext(AppContext);
+
+  const [arreglo, setArreglo] = useState([])
+  
+  
   return (
     <ScrollView
       style={{ backgroundColor: "#F2F2F2" }}
       showsVerticalScrollIndicator={false}
     >
-      <View style={styles.container}>
+      <View>
+      <Header></Header>
         <Text
           style={{
             ...styles.margins,
@@ -66,7 +43,7 @@ export default function GraphsScreen() {
             marginBottom: 20,
           }}
         >
-          Graficas de los diferentes tipos de cuerpos de agua.
+          Porcentaje de contaminación de los diferentes tipos de cuerpos de agua.
         </Text>
 
         <Text
@@ -79,9 +56,33 @@ export default function GraphsScreen() {
             color: "#535353",
           }}
         >
-          Graficas de pastel
+          Porcentajes de contaminación
         </Text>
-
+        <View style={{ ...styles.margins, marginVertical: 10 }}>
+          <SelectList
+            setSelected={(val) => {
+              setSelected2(val);
+              if(val === 'Rios'){
+                setArreglo(Rios)
+              } else if (val === 'Arroyo') {
+                setArreglo(Arroyo)
+              } else if (val === 'Lagos') {
+                setArreglo(Lagos)
+              } else if (val === 'Pozo') {
+                setArreglo(Pozo)
+              } else if (val === 'Laguna') {
+                setArreglo(Laguna)
+              } else if (val === 'Manantial') {
+                setArreglo(Manantial)
+              } else {
+                print('NO')
+              }
+            }}
+            data={water}
+            save="value"
+            search={false}
+          />
+        </View>
         <View
           style={{
             flexDirection: "row",
@@ -91,18 +92,18 @@ export default function GraphsScreen() {
             paddingHorizontal: 20,
           }}
         >
-          {data.map((p, i) => {
+          {arreglo.map((p, i) => {
             return (
-              <View style={p.radius && { width: "50%" }} key={i}>
+              <View style={80 && { width: "50%" }} key={i}>
                 <Donut
                   key={i}
-                  percentage={p.percentage}
-                  color={p.color}
+                  percentage={p.pollution}
+                  color={'#3ECEAB'}
                   delay={500 + 100 * i}
-                  max={p.max}
-                  radius={p.radius}
+                  max={100}
+                  radius={80}
                 />
-                <Text></Text>
+                <Text>{p.value}</Text>
               </View>
             );
           })}
@@ -117,7 +118,7 @@ export default function GraphsScreen() {
             color: "#535353",
           }}
         >
-          Graficas de barras
+          {/*Graficas de barras*/}
         </Text>
         <View
           style={{
@@ -133,9 +134,6 @@ export default function GraphsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingTop: Constants.statusBarHeight + 40,
-  },
   paragraph: {
     margin: 24,
     fontSize: 18,

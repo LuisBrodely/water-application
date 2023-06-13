@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import TodoItem from "../components/TodoItem";
 import { ScrollView } from "@motify/components";
+import Header from "../components/Header";
 
 export default function InformationScreen() {
   const retos = [
@@ -79,9 +80,10 @@ export default function InformationScreen() {
 
   return (
     <ScrollView
-      style={{ backgroundColor: "FFFFFF" }}
+      style={{ backgroundColor: "FFFFFF", marginBottom: 20 }}
       showsVerticalScrollIndicator={false}
     >
+      <Header></Header>
       <Text
         style={{
           marginHorizontal: 20,

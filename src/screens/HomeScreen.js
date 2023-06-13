@@ -1,126 +1,129 @@
-import { View, Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native'
-import React from 'react'
-import Constants from 'expo-constants'
-import Information from '../components/Information/Information'
-import Wave from '../components/Wave'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { SelectList } from 'react-native-dropdown-select-list'
-import { useState } from 'react'
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+} from "react-native";
+import React from "react";
+import Constants from "expo-constants";
+import Information from "../components/Information/Information";
+import Wave from "../components/Wave";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { SelectList } from "react-native-dropdown-select-list";
 import axios from "axios";
-
-
-
-
+import { useState, useEffect, useContext } from "react";
+import { AppContext } from "../context/Context";
+import Header from "../components/Header";
 
 const categories = [
-    { key: '1', value: '2023' },
-    { key: '2', value: '2022' },
-    { key: '3', value: '2019' },
-    { key: '4', value: '2018' },
-    { key: '5', value: '2017' },
-    { key: '6', value: '2016' },
-    { key: '7', value: '2015' },
-]
+  { key: "1", value: "2030", pollution: 100 },
+  { key: "2", value: "2029", pollution: 95 },
+  { key: "3", value: "2028", pollution: 90 },
+  { key: "4", value: "2027", pollution: 85 },
+  { key: "5", value: "2026", pollution: 80 },
+  { key: "6", value: "2025", pollution: 75 },
+  { key: "7", value: "2024", pollution: 70 },
+  { key: "8", value: "2023", pollution: 65 },
+  { key: "9", value: "2022", pollution: 60 },
+  { key: "10", value: "2021", pollution: 55 },
+  { key: "11", value: "2020", pollution: 50 },
+  { key: "12", value: "2019", pollution: 45 },
+  { key: "13", value: "2018", pollution: 40 },
+  { key: "14", value: "2017", pollution: 35 },
+  { key: "15", value: "2016", pollution: 30 },
+  { key: "16", value: "2015", pollution: 10 },
+];
 
-const years = [
-    { key: '1', value: 'Rios' },
-    { key: '2', value: 'Lagos' },
-    { key: '3', value: 'Mar' },
-    { key: '4', value: 'Computers' },
-    { key: '5', value: 'Vegetables' },
-    { key: '6', value: 'Diary Products' },
-    { key: '7', value: 'Drinks' },
-]
+const water = [
+  { key: "1", value: "Rios" },
+  { key: "2", value: "Lagos" },
+  { key: "3", value: "Arroyo" },
+  { key: "4", value: "Laguna" },
+  { key: "5", value: "Manantial" },
+  { key: "6", value: "Pozo" },
+  { key: "7", value: "Puente" },
+];
 
 export default function HomeScreen({ navigation }) {
-    const [selected, setSelected] = useState('')
-    const [selected2, setSelected2] = useState('')
-    const [chartImage4, setChartImage4] = useState([]);
-    const [chartImage5, setChartImage5] = useState([]);
+  const { selected, setSelected, selected2, setSelected2 } =
+    useContext(AppContext);
 
-    const handleAnos = (value) => {
-        axios.post('http://127.0.0.1:5000/anos', {"ano": "2020", "tipo": value})
-            .then(response => {
-                // Manejar la respuesta del servidor
-                setChartImage5(response.data.columns);
-            })
-            .catch(error => {
-                // Ocurrió un error al enviar la ruta del archivo
-                console.error(error);
-            });
-    };
+    const [porcentain, setPorcentain] = useState(0)
 
-    const obtenerColumnasCategoria = () => {
+    const [color, setColor] = useState('#0459C6')
 
-        axios.post('http://localhost:5000/categorias', {'tipo': 10})
-            .then(response => {
-                // Manejar la respuesta del servidor
-                setChartImage4(response.data.columns);
-            })
-            .catch(error => {
-                // Ocurrió un error al enviar la ruta del archivo
-                console.error(error);
-            });
-    };
+  function getPollutionColor(pollution) {
+    if (pollution >= 75) {
+      return "#533304";
+    } else if (pollution >= 50) {
+      return "#3D6A04";
+    } else if (pollution >= 25) {
+      return "#0459C6";
+    } else {
+      return "#3ECEAB";
+    }
+  }
 
-    useEffect(() => {
-        obtenerColumnasCategoria();
-    }, []);
+  return (
+    <ScrollView
+      contentContainerStyle={{
+        paddingBottom: 20,
+      }}
+      showsVerticalScrollIndicator={false}
+    >
+      <View>
+        <Header></Header>
+        <Text style={{ ...styles.margins, fontSize: 32, fontWeight: "800" }}>
+          ¡Conoce toda la información acerca del estado del agua!
+        </Text>
+        <View style={{ ...styles.margins, marginVertical: 10 }}>
+          <SelectList
+            setSelected={(val) => {
+              setSelected(val);
+              const selectedCategory = categories.find(
+                (category) => category.value === val
+              );
+              if (selectedCategory) {
+                const selectedPollution = selectedCategory.pollution;
+                // Utiliza el valor de la contaminación seleccionada como desees
+                console.log("Nivel de contaminación:", selectedPollution);
+                setPorcentain(selectedPollution)
+                setColor(getPollutionColor(selectedPollution))
+              }
+            }}
+            data={categories}
+            save="value"
+            search={false}
+          />
+        </View>
 
-    return (
-        <ScrollView
-        contentContainerStyle={{
-            paddingBottom: 20,
-        }}
-        showsVerticalScrollIndicator={false}
-        >
-            <View style={styles.container}>
-                <Text style={{ ...styles.margins, fontSize: 32, fontWeight: '800' }}>Do you already know where to travel?</Text>
-                <View style={{ ...styles.margins, marginVertical: 10 }}>
-                    <SelectList
-                        setSelected={(val) => setSelected(val)}
-                        data={categories}
-                        save="value"
-                        search={false}
-                        defaultOption={categories[0]}
-                    />
-                </View>
-                <View style={{ ...styles.margins, marginVertical: 10 }}>
-                    <SelectList
-                        setSelected={(val) => setSelected2(val)}
-                        data={years}
-                        save="value"
-                        search={false}
-                        defaultOption={years[0]}
-                    />
-                </View>
+        <View style={styles.margins}>
+          <Text style={{ ...styles.texts, marginTop: 20 }}>
+            Calidad del agua
+          </Text>
+          <Text style={{fontSize: 32, fontWeight: '800'}}>Porcentaje de contaminacion {porcentain} %</Text>
+        </View>
 
-                <View style={styles.margins}>
-                    <Text style={{ ...styles.texts, marginTop: 20 }}>Calidad del agua</Text>
-                </View>
+        <View style={{ marginVertical: 105 }}>
+          <Wave color={color} />
+        </View>
 
-                <View style={{ marginVertical: 105 }}>
-                    <Wave color={'#0459C6'} />
-                </View>
-
-                <View style={styles.margins}>
-                    <Text style={styles.texts}>Formas de cuidar el agua</Text>
-                </View>
-                <Information />
-            </View>
-        </ScrollView>
-    )
+        <View style={styles.margins}>
+          <Text style={styles.texts}>Formas de cuidar el agua</Text>
+        </View>
+        <Information />
+      </View>
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        marginTop: Constants.statusBarHeight + 12,
-    },
-    margins: {
-        marginHorizontal: 20
-    },
-    texts: {
-        fontSize: 14,
-        fontWeight: '700'
-    }
-})
+  margins: {
+    marginHorizontal: 20,
+  },
+  texts: {
+    fontSize: 14,
+    fontWeight: "700",
+  },
+});
