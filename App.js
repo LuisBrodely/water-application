@@ -6,7 +6,6 @@ import WaterScreen from "./src/screens/WaterScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import { AppProvider } from "./src/context/Context";
-import NewHome from "./src/screens/NewHome";
 
 const Tab = createBottomTabNavigator();
 
@@ -25,8 +24,6 @@ function App() {
                 iconName = "waves";
               } else if (route.name === "Water") {
                 iconName = "collections";
-              } else if (route.name === "NewHome") {
-                iconName = "home-filled";
               }
               return <Icon name={iconName} size={size} color={color} />;
             },
@@ -40,7 +37,6 @@ function App() {
           <Tab.Screen name="Graphs" component={GraphsScreen} />
           <Tab.Screen name="Information" component={InformationScreen} />
           <Tab.Screen name="Water" component={WaterScreen} />
-          <Tab.Screen name="NewHome" component={NewHome} />
         </Tab.Navigator>
       </NavigationContainer>
     </AppProvider>

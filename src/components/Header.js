@@ -19,6 +19,7 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: Constants.statusBarHeight,
     paddingHorizontal: 10,
     marginBottom: 20,
   },
