@@ -30,7 +30,7 @@ export default function Information() {
   {
     title: 'La Galería de los Verdes Invencibles: Marcas y opciones recomendadas',
     description: 'Explora la galería de los verdes invencibles y descubre las marcas y opciones más recomendadas en productos de limpieza ecológicos. Estas marcas heroicas ofrecen soluciones certificadas para una limpieza poderosa sin dañar el planeta.'
-  },
+  },  
   {
     title: 'Un Llamado a los Héroes Verdes: Conclusiones y acción',
     description: '¡Tú eres un héroe verde en potencia! Enfúndate tu capa de sostenibilidad y únete a nuestra llamada a la acción. Juntos, podemos cuidar el agua y el medio ambiente mientras hacemos de la limpieza una experiencia divertida y ecológica.'

@@ -4,10 +4,10 @@ import { MotiView } from '@motify/components'
 import { Easing } from 'react-native-reanimated'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const _size = 50
+const _size = 55
 const _color = '#0459C6'
 
-export default function Wave({color}) {
+export default function Wave({color, porcentain}) {
     return (
         <View style={{ alignItems: 'center', justifyContent: 'center' }}>
             <View style={[styles.dot, styles.center]}>
@@ -29,7 +29,9 @@ export default function Wave({color}) {
                         />
                     )
                 })}
-                <Icon name={'water'} size={35} color={'white'} />
+                <View>
+                    <Icon name={"water"} size={40} color={"white"} />
+                </View>
             </View>
         </View>
     )
@@ -43,6 +45,6 @@ const styles = StyleSheet.create({
     },
     center: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     }
 })

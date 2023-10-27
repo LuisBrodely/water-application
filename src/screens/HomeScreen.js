@@ -1,20 +1,22 @@
 import {
   View,
   Text,
-  TouchableOpacity,
   StyleSheet,
   ScrollView,
 } from "react-native";
 import React from "react";
-import Constants from "expo-constants";
 import Information from "../components/Information/Information";
 import Wave from "../components/Wave";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { SelectList } from "react-native-dropdown-select-list";
-import axios from "axios";
 import { useState, useEffect, useContext } from "react";
 import { AppContext } from "../context/Context";
 import Header from "../components/Header";
+import Tabs from "../components/tabs/Tabs";
+import About from "../components/about/About";
+import Specifics from "../components/specifics/Specifics";
+import InformationCard from "../components/Information/InformationCard";
+
+const tabs = ["Cuidado", "Naturaleza", "Mas informacion"];
 
 const categories = [
   { key: "1", value: "2030", pollution: 100 },
@@ -49,9 +51,39 @@ export default function HomeScreen({ navigation }) {
   const { selected, setSelected, selected2, setSelected2 } =
     useContext(AppContext);
 
-    const [porcentain, setPorcentain] = useState(0)
+  const [porcentain, setPorcentain] = useState(0);
 
-    const [color, setColor] = useState('#0459C6')
+  const [color, setColor] = useState("#0459C6");
+
+  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [data, setData] = useState([
+
+  ]);
+
+  const displayTabContent = () => {
+    switch (activeTab) {
+      case "Cuidado":
+        return (
+          <Information/>
+        );
+
+      case "Naturaleza":
+        return (
+          <About info={data[0]?.job_description ?? "No data provided"} />
+        );
+
+      case "Mas informacion":
+        return (
+          <Specifics
+            title='Responsibilities'
+            points={data[0]?.job_highlights?.Responsibilities ?? ["N/A"]}
+          />
+        );
+
+      default:
+        return null;
+    }
+  };
 
   function getPollutionColor(pollution) {
     if (pollution >= 75) {
@@ -74,9 +106,13 @@ export default function HomeScreen({ navigation }) {
     >
       <View>
         <Header></Header>
-        <Text style={{ ...styles.margins, fontSize: 32, fontWeight: "800" }}>
-          ¡Conoce toda la información acerca del estado del agua!
-        </Text>
+        <View style={{ ...styles.margins }}>
+          <Text style={{ fontSize: 20, color: "#444262" }}>Bienvenido</Text>
+          <Text style={{ fontSize: 24, color: "#312651", fontWeight: "bold" }}>
+            Estado del agua en Chiapas
+          </Text>
+        </View>
+        <Text></Text>
         <View style={{ ...styles.margins, marginVertical: 10 }}>
           <SelectList
             setSelected={(val) => {
@@ -88,31 +124,29 @@ export default function HomeScreen({ navigation }) {
                 const selectedPollution = selectedCategory.pollution;
                 // Utiliza el valor de la contaminación seleccionada como desees
                 console.log("Nivel de contaminación:", selectedPollution);
-                setPorcentain(selectedPollution)
-                setColor(getPollutionColor(selectedPollution))
+                setPorcentain(selectedPollution);
+                setColor(getPollutionColor(selectedPollution));
               }
             }}
             data={categories}
             save="value"
-            search={false}
+            search={true}
+            searchPlaceholder="Ingresa un año"
+            placeholder="Selecciona un año"
           />
         </View>
-
         <View style={styles.margins}>
-          <Text style={{ ...styles.texts, marginTop: 20 }}>
-            Calidad del agua
-          </Text>
-          <Text style={{fontSize: 32, fontWeight: '800'}}>Porcentaje de contaminacion {porcentain} %</Text>
+          <Text style={{ fontSize: 16, color: "#444262", marginTop: 4 }}>Pocentaje de contaminación</Text>
+          <Text style={{ fontSize: 32, color: "#312651", fontWeight: 'bold' }}>{porcentain + '%'}</Text>
+        </View>
+        <View style={{ marginBottom: 98, marginTop: 80 }}>
+          <Wave color={color} porcentain={porcentain} />
         </View>
 
-        <View style={{ marginVertical: 105 }}>
-          <Wave color={color} />
+        <View style={{...styles.margins}}>
+          <Tabs tabs={tabs} activeTab={activeTab} setActiveTab={setActiveTab} />
         </View>
-
-        <View style={styles.margins}>
-          <Text style={styles.texts}>Formas de cuidar el agua</Text>
-        </View>
-        <Information />
+        {displayTabContent()}
       </View>
     </ScrollView>
   );
@@ -123,7 +157,8 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   texts: {
-    fontSize: 14,
+    fontSize: 24,
     fontWeight: "700",
+    color: "#444262",
   },
 });

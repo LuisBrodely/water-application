@@ -34,30 +34,10 @@ export default function GraphsScreen() {
     >
       <View>
       <Header></Header>
-        <Text
-          style={{
-            ...styles.margins,
-            fontSize: 24,
-            fontWeight: "800",
-            width: 310,
-            marginBottom: 20,
-          }}
-        >
-          Porcentaje de contaminación de los diferentes tipos de cuerpos de agua.
-        </Text>
-
-        <Text
-          style={{
-            ...styles.margins,
-            fontSize: 16,
-            fontWeight: "800",
-            width: 310,
-            marginBottom: 10,
-            color: "#535353",
-          }}
-        >
-          Porcentajes de contaminación
-        </Text>
+        <View style={{...styles.margins, marginBottom: 16}}>
+          <Text style={{fontSize: 20, color: '#444262'}}>Porcentajes de contaminación en</Text>
+          <Text style={{fontSize: 24, color: '#312651', fontWeight: 'bold'}}>Cuerpos de agua en Chiapas</Text>
+        </View>
         <View style={{ ...styles.margins, marginVertical: 10 }}>
           <SelectList
             setSelected={(val) => {
@@ -81,6 +61,8 @@ export default function GraphsScreen() {
             data={water}
             save="value"
             search={false}
+            placeholder="Selecciona un tipo"
+            searchPlaceholder="Buscar un tipo"
           />
         </View>
         <View

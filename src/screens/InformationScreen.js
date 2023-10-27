@@ -3,6 +3,7 @@ import React from "react";
 import TodoItem from "../components/TodoItem";
 import { ScrollView } from "@motify/components";
 import Header from "../components/Header";
+import { StyleSheet } from "react-native";
 
 export default function InformationScreen() {
   const retos = [
@@ -84,24 +85,16 @@ export default function InformationScreen() {
       showsVerticalScrollIndicator={false}
     >
       <Header></Header>
-      <Text
-        style={{
-          marginHorizontal: 20,
-          fontSize: 24,
-          fontWeight: "800",
-          marginTop: 30,
-        }}
-      >
-        Retos Acuaticos
-      </Text>
+      <View style={{...styles.margins, marginBottom: 16}}>
+          <Text style={{fontSize: 20, color: '#444262'}}>Conoce los siguientes</Text>
+          <Text style={{fontSize: 24, color: '#312651', fontWeight: 'bold'}}>Retos para el cuidado del agua</Text>
+      </View>
       <View
         style={{
-          height: 4,
-          width: 120,
-          backgroundColor: "#3ECEAB",
-          borderRadius: 20,
+          height: 6,
+          width: 100,
+          backgroundColor: "#444262",
           marginHorizontal: 20,
-          marginVertical: 5,
         }}
       />
 
@@ -115,3 +108,14 @@ export default function InformationScreen() {
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  margins: {
+    marginHorizontal: 20,
+  },
+  texts: {
+    fontSize: 24,
+    fontWeight: "700",
+    color: "#444262",
+  },
+});

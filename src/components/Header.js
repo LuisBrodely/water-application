@@ -8,22 +8,18 @@ export default function Header() {
     <View
       style={{
         ...styles.container,
-        paddingVertical: 20,
-        backgroundColor: "white",
+        paddingVertical: 12,
         flexDirection: 'row', 
         alignItems: 'center'
       }}
     >
-      <Icon name={"water"} size={35} color={"#0459C6"} />
-      <Text style={{fontSize: 24, fontWeight: '600'}}>ConcienciaAzul</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: Constants.statusBarHeight + 10,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
     marginBottom: 20,
   },
 });
