@@ -69,15 +69,12 @@ export default function HomeScreen({ navigation }) {
 
       case "Naturaleza":
         return (
-          <About info={data[0]?.job_description ?? "No data provided"} />
+          <Information/>
         );
 
       case "Mas informacion":
         return (
-          <Specifics
-            title='Responsibilities'
-            points={data[0]?.job_highlights?.Responsibilities ?? ["N/A"]}
-          />
+          <Information/>
         );
 
       default:

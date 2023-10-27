@@ -8,6 +8,7 @@ import { useState, useEffect, useContext } from 'react'
 import { AppContext } from "../context/Context";
 import { SelectList } from "react-native-dropdown-select-list";
 import Header from "../components/Header";
+import BarChart from "../components/Graphs/BarChart";
 
 import { Rios, Arroyo, Lagos, Manantial, Laguna, Pozo } from "../util/util";
 
@@ -38,7 +39,7 @@ export default function GraphsScreen() {
           <Text style={{fontSize: 20, color: '#444262'}}>Porcentajes de contaminación en</Text>
           <Text style={{fontSize: 24, color: '#312651', fontWeight: 'bold'}}>Cuerpos de agua en Chiapas</Text>
         </View>
-        <View style={{ ...styles.margins, marginVertical: 10 }}>
+        <View style={{ ...styles.margins, marginTop: 10, marginBottom: 20 }}>
           <SelectList
             setSelected={(val) => {
               setSelected2(val);
@@ -76,40 +77,16 @@ export default function GraphsScreen() {
         >
           {arreglo.map((p, i) => {
             return (
-              <View style={80 && { width: "50%" }} key={i}>
-                <Donut
+              <View style={{width:'100%', marginTop: 10, flexDirection: 'row'}} key={i}>
+                <Text style={{ fontSize: 16, color: "#444262", marginRight: 12 }}yle>{p.value}</Text>
+                <BarChart
                   key={i}
                   percentage={p.pollution}
-                  color={'#3ECEAB'}
-                  delay={500 + 100 * i}
-                  max={100}
-                  radius={80}
                 />
-                <Text>{p.value}</Text>
               </View>
             );
           })}
         </View>
-        <Text
-          style={{
-            ...styles.margins,
-            fontSize: 16,
-            fontWeight: "800",
-            width: 310,
-            marginBottom: 10,
-            color: "#535353",
-          }}
-        >
-          {/*Graficas de barras*/}
-        </Text>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-evenly",
-            flexWrap: "wrap",
-            alignItems: "center",
-          }}
-        ></View>
       </View>
     </ScrollView>
   );
